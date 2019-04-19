@@ -22,7 +22,10 @@ project "imgui"
   }
 
   files {
-    "*.cpp"
+    "*.cpp",
+    "examples/imgui_impl_glfw.cpp",
+    "examples/imgui_impl_opengl3.cpp",
+    "examples/imgui_impl_opengl2.cpp",
   }
 
   excludes {
@@ -30,6 +33,7 @@ project "imgui"
 
   includedirs {
     prjDir,
+    _3RDPARTY_DIR,
   }
 
   -- -------------------------------------------------------------
@@ -40,6 +44,10 @@ project "imgui"
     -- -------------------------------------------------------------
     -- configuration { "windows" }
     -- -------------------------------------------------------------
+    files {
+      "examples/imgui_impl_dx11.cpp",
+      "examples/imgui_impl_win32.cpp",
+    }
 
     -- common configuration settings
 
@@ -146,6 +154,16 @@ project "imgui"
     -- -------------------------------------------------------------
 
     -- common configuration settings
+    buildoptions {
+        "-fobjc-arc",
+        "-fobjc-arc-exceptions",
+    }
+    
+    files {
+      "examples/imgui_impl_metal.mm",
+      "examples/imgui_impl_osx.mm",
+    }
+
 
     dofile (_BUILD_DIR .. "/static_mac.lua")
 
