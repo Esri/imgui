@@ -9,17 +9,11 @@ project "imgui"
 
   -- common project settings
 
-  dofile (_BUILD_DIR .. "/3rdparty_static_project.lua")
+  dofile (_BUILD_DIR .. "/3rdparty_shared_project.lua")
 
   -- project specific settings
 
-  uuid "00273C6F-C6D6-456A-9DFC-B65011816616"
-
-  flags {
-  }
-
-  defines {
-  }
+  uuid "C914A97A-3068-4B8A-8512-34097411C13C"
 
   files {
     "*.cpp",
@@ -28,12 +22,13 @@ project "imgui"
     "examples/imgui_impl_opengl2.cpp",
   }
 
-  excludes {
-  }
-
   includedirs {
     prjDir,
     _3RDPARTY_DIR,
+  }
+
+  links {
+    "glfw",
   }
 
   -- -------------------------------------------------------------
@@ -44,18 +39,24 @@ project "imgui"
     -- -------------------------------------------------------------
     -- configuration { "windows" }
     -- -------------------------------------------------------------
-    files {
-      "examples/imgui_impl_dx11.cpp",
-      "examples/imgui_impl_win32.cpp",
-    }
 
     -- common configuration settings
 
-    dofile (_BUILD_DIR .. "/3rdparty_static_win.lua")
+    dofile (_BUILD_DIR .. "/3rdparty_shared_win.lua")
 
     -- project specific configuration settings
 
-    -- configuration { "windows" }
+    configuration { "windows" }
+
+      files {
+        "examples/imgui_impl_dx11.cpp",
+        "examples/imgui_impl_win32.cpp",
+      }
+
+      links {
+        "glad",
+        "opengl32",
+      }
 
     -- -------------------------------------------------------------
     -- configuration { "windows", "Debug", "x32" }
@@ -63,7 +64,7 @@ project "imgui"
 
     -- common configuration settings
 
-    dofile (_BUILD_DIR .. "/static_win_x86_debug.lua")
+    dofile (_BUILD_DIR .. "/shared_win_x86_debug.lua")
 
     -- project specific configuration settings
 
@@ -75,7 +76,7 @@ project "imgui"
 
     -- common configuration settings
 
-    dofile (_BUILD_DIR .. "/static_win_x64_debug.lua")
+    dofile (_BUILD_DIR .. "/shared_win_x64_debug.lua")
 
     -- project specific configuration settings
 
@@ -87,7 +88,7 @@ project "imgui"
 
     -- common configuration settings
 
-    dofile (_BUILD_DIR .. "/static_win_x86_release.lua")
+    dofile (_BUILD_DIR .. "/shared_win_x86_release.lua")
 
     -- project specific configuration settings
 
@@ -99,7 +100,7 @@ project "imgui"
 
     -- common configuration settings
 
-    dofile (_BUILD_DIR .. "/static_win_x64_release.lua")
+    dofile (_BUILD_DIR .. "/shared_win_x64_release.lua")
 
     -- project specific configuration settings
 
@@ -115,11 +116,15 @@ project "imgui"
 
     -- common configuration settings
 
-    dofile (_BUILD_DIR .. "/static_linux.lua")
+    dofile (_BUILD_DIR .. "/shared_linux.lua")
 
     -- project specific configuration settings
 
-    -- configuration { "linux" }
+    configuration { "linux" }
+
+      links {
+        "GL",
+      }
 
     -- -------------------------------------------------------------
     -- configuration { "linux", "Debug", "x64" }
@@ -127,11 +132,15 @@ project "imgui"
 
     -- common configuration settings
 
-    dofile (_BUILD_DIR .. "/static_linux_x64_debug.lua")
+    dofile (_BUILD_DIR .. "/shared_linux_x64_debug.lua")
 
     -- project specific configuration settings
 
-    -- configuration { "linux", "Debug", "x64" }
+    configuration { "linux", "Debug", "x64" }
+
+    links {
+      "gladd",
+    }
 
     -- -------------------------------------------------------------
     -- configuration { "linux", "Release", "x64" }
@@ -139,11 +148,15 @@ project "imgui"
 
     -- common configuration settings
 
-    dofile (_BUILD_DIR .. "/static_linux_x64_release.lua")
+    dofile (_BUILD_DIR .. "/shared_linux_x64_release.lua")
 
     -- project specific configuration settings
 
-    -- configuration { "linux", "Release", "x64" }
+    configuration { "linux", "Release", "x64" }
+
+    links {
+      "glad",
+    }
 
     -- -------------------------------------------------------------
   end
@@ -154,22 +167,27 @@ project "imgui"
     -- -------------------------------------------------------------
 
     -- common configuration settings
-    buildoptions {
+
+    dofile (_BUILD_DIR .. "/shared_mac.lua")
+
+    -- project specific configuration settings
+
+    configuration { "macosx" }
+
+      buildoptions {
         "-fobjc-arc",
         "-fobjc-arc-exceptions",
-    }
-    
-    files {
-      "examples/imgui_impl_metal.mm",
-      "examples/imgui_impl_osx.mm",
-    }
+      }
 
+      files {
+        "examples/imgui_impl_metal.mm",
+        "examples/imgui_impl_osx.mm",
+      }
 
-    dofile (_BUILD_DIR .. "/static_mac.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "macosx" }
+      linkoptions {
+        "-framework OpenGL",
+        "-framework Metal",
+      }
 
     -- -------------------------------------------------------------
     -- configuration { "macosx", "Debug", "x64" }
@@ -177,11 +195,15 @@ project "imgui"
 
     -- common configuration settings
 
-    dofile (_BUILD_DIR .. "/static_mac_x64_debug.lua")
+    dofile (_BUILD_DIR .. "/shared_mac_x64_debug.lua")
 
     -- project specific configuration settings
 
-    -- configuration { "macosx", "Debug", "x64" }
+    configuration { "macosx", "Debug", "x64" }
+
+      links {
+        "gladd",
+      }
 
     -- -------------------------------------------------------------
     -- configuration { "macosx", "Release", "x64" }
@@ -189,275 +211,15 @@ project "imgui"
 
     -- common configuration settings
 
-    dofile (_BUILD_DIR .. "/static_mac_x64_release.lua")
+    dofile (_BUILD_DIR .. "/shared_mac_x64_release.lua")
 
     -- project specific configuration settings
 
-    -- configuration { "macosx", "Release", "x64" }
-
-    -- -------------------------------------------------------------
-  end
-
-  if (_OS_IS_IOS) then
-    -- -------------------------------------------------------------
-    -- configuration { "ios" } == _OS_IS_IOS
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_ios.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "ios*" }
-
-    -- -------------------------------------------------------------
-    -- configuration { "ios_arm64_debug" }
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_ios_arm64_debug.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "ios_arm64_debug" }
-
-    -- -------------------------------------------------------------
-    -- configuration { "ios_arm64_release" }
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_ios_arm64_release.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "ios_arm64_release" }
-
-    -- -------------------------------------------------------------
-    -- configuration { "ios_sim64_debug" }
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_ios_sim64_debug.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "ios_sim64_debug" }
-
-    -- -------------------------------------------------------------
-    -- configuration { "ios_sim64_release" }
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_ios_sim64_release.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "ios_sim64_release" }
-
-    -- -------------------------------------------------------------
-  end
-
-  if (_OS_IS_ANDROID) then
-    -- -------------------------------------------------------------
-    -- configuration { "android" } == _OS_IS_ANDROID
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_android.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "android*" }
-
-    -- -------------------------------------------------------------
-    -- configuration { "android_armv7_debug" }
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_android_armv7_debug.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "android_armv7_debug" }
-
-    -- -------------------------------------------------------------
-    -- configuration { "android_armv7_release" }
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_android_armv7_release.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "android_armv7_release" }
-
-    -- -------------------------------------------------------------
-    -- configuration { "android_x86_debug" }
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_android_x86_debug.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "android_x86_debug" }
-
-    -- -------------------------------------------------------------
-    -- configuration { "android_x86_release" }
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_android_x86_release.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "android_x86_release" }
-
-    -- -------------------------------------------------------------
-    -- configuration { "android_arm64_debug" }
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_android_arm64_debug.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "android_arm64_debug" }
-
-    -- -------------------------------------------------------------
-    -- configuration { "android_arm64_release" }
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_android_arm64_release.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "android_arm64_release" }
-
-    -- -------------------------------------------------------------
-  end
-
-  if (_TARGET_IS_WINUWP) then
-    -- -------------------------------------------------------------
-    -- configuration { "winuwp" } == _TARGET_IS_WINUWP
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_winuwp.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "windows" }
-
-    -- -------------------------------------------------------------
-    -- configuration { "winuwp_debug", "x32" }
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_winuwp_x86_debug.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "winuwp_debug", "x32" }
-
-    -- -------------------------------------------------------------
-    -- configuration { "winuwp_release", "x32" }
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_winuwp_x86_release.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "winuwp_release", "x32" }
-
-    -- -------------------------------------------------------------
-    -- configuration { "winuwp_debug", "x64" }
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_winuwp_x64_debug.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "winuwp_debug", "x64" }
-
-    -- -------------------------------------------------------------
-    -- configuration { "winuwp_release", "x64" }
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_winuwp_x64_release.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "winuwp_release", "x64" }
-
-    -- -------------------------------------------------------------
-    -- configuration { "winuwp_debug", "ARM" }
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_winuwp_arm_debug.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "winuwp_debug", "ARM" }
-
-    -- -------------------------------------------------------------
-    -- configuration { "winuwp_release", "ARM" }
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_winuwp_arm_release.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "winuwp_release", "ARM" }
-
-    -- -------------------------------------------------------------
-    -- configuration { "winuwp_debug", "ARM64" }
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_winuwp_arm64_debug.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "winuwp_debug", "ARM64" }
-
-    -- -------------------------------------------------------------
-    -- configuration { "winuwp_release", "ARM64" }
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_winuwp_arm64_release.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "winuwp_release", "ARM64" }
+    configuration { "macosx", "Release", "x64" }
+
+      links {
+        "glad",
+      }
 
     -- -------------------------------------------------------------
   end
