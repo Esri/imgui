@@ -27,9 +27,6 @@ project "imgui"
     _3RDPARTY_DIR,
   }
 
-  links {
-    "glfw",
-  }
 
   -- -------------------------------------------------------------
   -- configurations
@@ -48,6 +45,10 @@ project "imgui"
 
     configuration { "windows" }
 
+      defines {
+        "IMGUI_API=__declspec(dllexport)",
+      }
+
       files {
         "examples/imgui_impl_dx11.cpp",
         "examples/imgui_impl_win32.cpp",
@@ -56,6 +57,7 @@ project "imgui"
       links {
         "glad",
         "opengl32",
+        "glfw3"
       }
 
     -- -------------------------------------------------------------
@@ -124,6 +126,7 @@ project "imgui"
 
       links {
         "GL",
+        "glfw"
       }
 
     -- -------------------------------------------------------------
@@ -173,6 +176,10 @@ project "imgui"
     -- project specific configuration settings
 
     configuration { "macosx" }
+      
+      links {
+        "glfw",
+      }
 
       buildoptions {
         "-fobjc-arc",
