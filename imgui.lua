@@ -15,20 +15,11 @@ project "imgui"
 
   uuid "00273C6F-C6D6-456A-9DFC-B65011816616"
 
-  flags {
-  }
-
-  defines {
-  }
-
   files {
     "*.cpp",
     "examples/imgui_impl_glfw.cpp",
     "examples/imgui_impl_opengl3.cpp",
     "examples/imgui_impl_opengl2.cpp",
-  }
-
-  excludes {
   }
 
   includedirs {
@@ -40,7 +31,7 @@ project "imgui"
   -- configurations
   -- -------------------------------------------------------------
 
-  if (os.is("windows") and not _TARGET_IS_WINUWP) then
+  if (_PLATFORM_WINDOWS) then
     -- -------------------------------------------------------------
     -- configuration { "windows" }
     -- -------------------------------------------------------------
@@ -108,7 +99,7 @@ project "imgui"
     -- -------------------------------------------------------------
   end
 
-  if (os.is("linux") and not _OS_IS_ANDROID) then
+  if (_PLATFORM_LINUX) then
     -- -------------------------------------------------------------
     -- configuration { "linux" }
     -- -------------------------------------------------------------
@@ -148,7 +139,7 @@ project "imgui"
     -- -------------------------------------------------------------
   end
 
-  if (os.is("macosx") and not _OS_IS_IOS and not _OS_IS_ANDROID) then
+  if (_PLATFORM_MACOS) then
     -- -------------------------------------------------------------
     -- configuration { "macosx" }
     -- -------------------------------------------------------------
@@ -158,7 +149,7 @@ project "imgui"
         "-fobjc-arc",
         "-fobjc-arc-exceptions",
     }
-    
+
     files {
       "examples/imgui_impl_metal.mm",
       "examples/imgui_impl_osx.mm",
@@ -198,9 +189,9 @@ project "imgui"
     -- -------------------------------------------------------------
   end
 
-  if (_OS_IS_IOS) then
+  if (_PLATFORM_IOS) then
     -- -------------------------------------------------------------
-    -- configuration { "ios" } == _OS_IS_IOS
+    -- configuration { "ios*" }
     -- -------------------------------------------------------------
 
     -- common configuration settings
@@ -262,9 +253,9 @@ project "imgui"
     -- -------------------------------------------------------------
   end
 
-  if (_OS_IS_ANDROID) then
+  if (_PLATFORM_ANDROID) then
     -- -------------------------------------------------------------
-    -- configuration { "android" } == _OS_IS_ANDROID
+    -- configuration { "android*" }
     -- -------------------------------------------------------------
 
     -- common configuration settings
@@ -350,9 +341,9 @@ project "imgui"
     -- -------------------------------------------------------------
   end
 
-  if (_TARGET_IS_WINUWP) then
+  if (_PLATFORM_WINUWP) then
     -- -------------------------------------------------------------
-    -- configuration { "winuwp" } == _TARGET_IS_WINUWP
+    -- configuration { "windows" }
     -- -------------------------------------------------------------
 
     -- common configuration settings
@@ -410,30 +401,6 @@ project "imgui"
     -- project specific configuration settings
 
     -- configuration { "winuwp_release", "x64" }
-
-    -- -------------------------------------------------------------
-    -- configuration { "winuwp_debug", "ARM" }
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_winuwp_arm_debug.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "winuwp_debug", "ARM" }
-
-    -- -------------------------------------------------------------
-    -- configuration { "winuwp_release", "ARM" }
-    -- -------------------------------------------------------------
-
-    -- common configuration settings
-
-    dofile (_BUILD_DIR .. "/static_winuwp_arm_release.lua")
-
-    -- project specific configuration settings
-
-    -- configuration { "winuwp_release", "ARM" }
 
     -- -------------------------------------------------------------
     -- configuration { "winuwp_debug", "ARM64" }
