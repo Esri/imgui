@@ -17,9 +17,6 @@ project "imgui"
 
   files {
     "*.cpp",
-    "examples/imgui_impl_glfw.cpp",
-    "examples/imgui_impl_opengl3.cpp",
-    "examples/imgui_impl_opengl2.cpp",
   }
 
   includedirs {
@@ -47,6 +44,9 @@ project "imgui"
       files {
         "examples/imgui_impl_dx11.cpp",
         "examples/imgui_impl_win32.cpp",
+        "examples/imgui_impl_glfw.cpp",
+        "examples/imgui_impl_opengl3.cpp",
+        "examples/imgui_impl_opengl2.cpp",
       }
 
     -- -------------------------------------------------------------
@@ -111,7 +111,13 @@ project "imgui"
 
     -- project specific configuration settings
 
-    -- configuration { "linux" }
+    configuration { "linux" }
+
+      files {
+        "examples/imgui_impl_glfw.cpp",
+        "examples/imgui_impl_opengl3.cpp",
+        "examples/imgui_impl_opengl2.cpp",
+      }
 
     -- -------------------------------------------------------------
     -- configuration { "linux", "Debug", "x64" }
@@ -140,6 +146,105 @@ project "imgui"
     -- -------------------------------------------------------------
   end
 
+if (_PLATFORM_COCOA) then
+    -- -------------------------------------------------------------
+    -- -------------------------------------------------------------
+    -- configuration { "ios" } == _OS_IS_IOS
+    -- configuration { "cocoa*" }
+    -- -------------------------------------------------------------
+
+    -- common configuration settings
+
+    dofile (_BUILD_DIR .. "/static_cocoa.lua")
+
+    -- project specific configuration settings
+
+    configuration { "cocoa*" }
+
+      buildoptions {
+        "-fobjc-arc",
+        "-fobjc-arc-exceptions",
+      }
+
+      files {
+        "examples/imgui_impl_metal.mm",
+      }
+
+    -- -------------------------------------------------------------
+    -- configuration { "cocoa_arm64_debug" }
+    -- -------------------------------------------------------------
+
+    -- common configuration settings
+
+    dofile (_BUILD_DIR .. "/static_cocoa_arm64_debug.lua")
+
+    -- project specific configuration settings
+
+    -- configuration { "cocoa_arm64_debug" }
+
+    -- -------------------------------------------------------------
+    -- configuration { "cocoa_arm64_release" }
+    -- -------------------------------------------------------------
+
+    -- common configuration settings
+
+    dofile (_BUILD_DIR .. "/static_cocoa_arm64_release.lua")
+
+    -- project specific configuration settings
+
+    -- configuration { "cocoa_arm64_release" }
+
+    -- -------------------------------------------------------------
+    -- configuration { "cocoa_sim64_debug" }
+    -- -------------------------------------------------------------
+
+    -- common configuration settings
+
+    dofile (_BUILD_DIR .. "/static_cocoa_sim64_debug.lua")
+
+    -- project specific configuration settings
+
+    -- configuration { "cocoa_sim64_debug" }
+
+    -- -------------------------------------------------------------
+    -- configuration { "cocoa_sim64_release" }
+    -- -------------------------------------------------------------
+
+    -- common configuration settings
+
+    dofile (_BUILD_DIR .. "/static_cocoa_sim64_release.lua")
+
+    -- project specific configuration settings
+
+    -- configuration { "cocoa_sim64_release" }
+
+    -- -------------------------------------------------------------
+    -- configuration { "cocoa_x64_debug" }
+    -- -------------------------------------------------------------
+
+    -- common configuration settings
+
+    dofile (_BUILD_DIR .. "/static_cocoa_x64_debug.lua")
+
+    -- project specific configuration settings
+
+    -- configuration { "cocoa_x64_debug" }
+
+    -- -------------------------------------------------------------
+    -- configuration { "cocoa_x64_release" }
+    -- -------------------------------------------------------------
+
+    -- common configuration settings
+
+    dofile (_BUILD_DIR .. "/static_cocoa_x64_release.lua")
+
+    -- project specific configuration settings
+
+    -- configuration { "cocoa_x64_release" }
+
+    -- -------------------------------------------------------------
+  end
+
   if (_PLATFORM_MACOS) then
     -- -------------------------------------------------------------
     -- configuration { "macosx" }
@@ -159,9 +264,13 @@ project "imgui"
       }
 
       files {
+        "examples/imgui_impl_glfw.cpp",
+        "examples/imgui_impl_opengl3.cpp",
+        "examples/imgui_impl_opengl2.cpp",
         "examples/imgui_impl_metal.mm",
         "examples/imgui_impl_osx.mm",
       }
+
 
     -- -------------------------------------------------------------
     -- configuration { "macosx", "Debug", "x64" }
