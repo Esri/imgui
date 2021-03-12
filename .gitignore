@@ -1,0 +1,64 @@
+# Premake generated files #
+###########################
+*.vcxproj*
+*.sln
+Makefile
+*.make
+*.xcworkspace
+*.xcodeproj
+compile_commands.json
+*_single_file_build.cpp
+*_unity_build.cpp
+
+# OS generated files #
+######################
+.DS_Store*
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.project
+.directory
+
+# VS generated files #
+######################
+ipch/
+*.suo
+*.opensdf
+*.sdf
+*.vcxproj
+*.filters
+*.user
+*.cso
+.vscode
+*.code-workspace
+
+# Qt files #
+############
+*.config
+*.creator*
+*.files
+*.includes
+*.user*
+moc/
+test/build-runtimecore_test_qml*
+
+# Intermediate Files #
+######################
+*.asm
+*.air
+*.metallib
+
+# Coverity Files #
+##################
+.cov/
+data-coverity/
+
+# Other IDEs/editors #
+######################
+.idea/
+
+# git noise #
+#############
+**/*.orig
