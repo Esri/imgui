@@ -9,6 +9,7 @@ uuid "00273C6F-C6D6-456A-9DFC-B65011816616"
 includedirs {
   ".",
   _3RDPARTY_DIR,
+  _3RDPARTY_DIR .. "/glfw/include",
 }
 
 files {
