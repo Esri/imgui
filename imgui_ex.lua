@@ -13,9 +13,10 @@ includedirs {
 }
 
 files {
-  "examples/imgui_impl_glfw.cpp",
-  "examples/imgui_impl_opengl3.cpp",
-  "examples/imgui_impl_opengl2.cpp",
+  "imgui_demo.cpp",
+  "backends/imgui_impl_glfw.cpp",
+  "backends/imgui_impl_opengl3.cpp",
+  "backends/imgui_impl_opengl2.cpp",
 }
 
 if (_PLATFORM_ANDROID) then
@@ -37,15 +38,15 @@ if (_PLATFORM_MACOS) then
   }
 
   files {
-    "examples/imgui_impl_metal.mm",
-    "examples/imgui_impl_osx.mm",
+    "backends/imgui_impl_metal.mm",
+    "backends/imgui_impl_osx.mm",
   }
 end
 
 if (_PLATFORM_WINDOWS) then
   files {
-    "examples/imgui_impl_dx11.cpp",
-    "examples/imgui_impl_win32.cpp",
+    "backends/imgui_impl_dx11.cpp",
+    "backends/imgui_impl_win32.cpp",
   }
 end
 

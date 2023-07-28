@@ -3,9 +3,9 @@ from conans import ConanFile
 
 class ImguiConan(ConanFile):
     name = "imgui"
-    version = "1.69"
-    url = "https://github.com/ocornut/imgui/tree/v1.69"
-    license = "https://github.com/ocornut/imgui/blob/v1.69/LICENSE.txt"
+    version = "1.89.7"
+    url = "https://github.com/ocornut/imgui/tree/v1.89.7"
+    license = "https://github.com/ocornut/imgui/blob/v1.89.7/LICENSE.txt"
     description = "Dear ImGui: Bloat-free Graphical User interface for C++ with minimal dependencies."
 
     # RTC specific triple
