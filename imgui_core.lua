@@ -19,6 +19,7 @@ includedirs {
 
 files {
   "*.cpp",
+  "misc/cpp/imgui_stdlib.cpp",
 }
 
 excludes {
