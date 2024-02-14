@@ -42,7 +42,11 @@
 #if defined(IMGUI_IMPL_VULKAN_NO_PROTOTYPES) && !defined(VK_NO_PROTOTYPES)
 #define VK_NO_PROTOTYPES
 #endif
+#ifdef RTC
 #include <volk.h>
+#else
+#include <vulkan/vulkan.h>
+#endif
 
 // Initialization data, for ImGui_ImplVulkan_Init()
 // [Please zero-clear before use!]
