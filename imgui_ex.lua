@@ -29,6 +29,14 @@ if (_PLATFORM_IOS) then
 end
 
 if (_PLATFORM_LINUX) then
+  includedirs {
+	_3RDPARTY_DIR .. "/Vulkan-Headers/include",
+	_3RDPARTY_DIR .. "/volk",
+  }
+
+  files {
+    "backends/imgui_impl_vulkan.cpp",
+  }
 end
 
 if (_PLATFORM_MACOS) then
@@ -44,9 +52,15 @@ if (_PLATFORM_MACOS) then
 end
 
 if (_PLATFORM_WINDOWS) then
+  includedirs {
+	_3RDPARTY_DIR .. "/Vulkan-Headers/include",
+	_3RDPARTY_DIR .. "/volk",
+  }
+
   files {
     "backends/imgui_impl_dx11.cpp",
     "backends/imgui_impl_win32.cpp",
+    "backends/imgui_impl_vulkan.cpp",
   }
 end
 
